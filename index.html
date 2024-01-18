@@ -1,13 +1,16 @@
 <!DOCTYPE html>
+<!-- Author: https://github.com/chuz-tnd-skachss/Pdf2Img -->
+<!-- Editor: Skachkov S.S. (@chuz-tnd-skachss) -->
+<!-- Version: 1.1.0 -->
 <html>
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Pdf2Img - Convert Pdf to PNG/JPEG in your browser!</title>
+  <title>Pdf2Img - Конвертируй PDF в PNG/JPEG в своём браузере!</title>
   <meta name="description"
-    content="Free, In-browser, Privacy friendly PDF to image convertor. Supports JPG/JPEG,PNG Image file formats. Your files doesn't leave your browser.">
+    content="Бесплатный, браузерный, приватный конвертор PDF в изображения. Поддерживает JPG/JPEG,PNG форматы. Ваши файлы не покидают браузер.">
   <link rel="shortcut icon" type="image/x-icon" href="pdf2img-favicon.ico">
   <link rel="icon" type="image/x-icon" href="pdf2img-favicon.ico">
   <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200&display=swap" rel="stylesheet">
@@ -22,42 +25,42 @@
       <div id="params_div">
         <div style="text-align: center;">
           <h1 id="title">Pdf2Img</h1>
-          <h6 id="caption">Made with ❤️ towards Privacy 🔒</h6>
+          <h6 id="caption">Сделано с ❤️ и приватностью 🔒</h6>
         </div>
         <div style="text-align: center;">
           <img style="width: 20vw;margin: 1vmax;" alt="logo" src="placeholder/hero.svg">
         </div>
         <div id="pdf_params_divs_container">
           <div class="pdf_params_divs">
-            <label for="pdf_input">Input file: </label>
-            <button id="pdf_input_overlay">Select PDF</button>
+            <label for="pdf_input">PDF файл: </label>
+            <button id="pdf_input_overlay">Выберите файл</button>
             <input id="pdf_input" type="file" accept="application/pdf" style="display:none;">
             <output style="font-size: x-small;" id="selected_file_name" for="pdf_input_overlay"></output>
           </div>
           <div class="pdf_params_divs">
-            <label for="format_select">Output image format: </label>
+            <label for="format_select">Выходной формат изображений: </label>
             <select id="format_select">
               <option value="image/png" selected>PNG</option>
               <option value="image/jpeg">JPEG</option>
             </select>
           </div>
           <div class="pdf_params_divs">
-            <label for="scale_input">PDF page scale factor: </label>
+            <label for="scale_input">Масштаб PDF страниц: </label>
             <input class="text_input" id="scale_input" type="range" min="0.5" max="15" value="1" step="0.5">
             <output style="font-size: small;" id="output_scale_input" for="scale_input">1</output>
           </div>
           <div class="pdf_params_divs">
-            <label for="quality_input">Output image quality multiplier: </label>
+            <label for="quality_input">Множитель качества выходных изображений: </label>
             <input class="text_input" id="quality_input" type="range" min="0" max="1" value="0.8" step="0.1">
             <output style="font-size: small;" id="output_quality_input" for="quality_input">0.8</output>
           </div>
           <div style="text-align: center;">
-            <button id="convert_pdf">Convert to Image(s)</button>
+            <button id="convert_pdf">Конвертировать изображение(я)</button>
           </div>
         </div>
         <div style="text-align: center;">
           <img id="gh_logo" src="placeholder/gh-mark.png" alt="Github logo"
-            onclick="window.location= 'https://github.com/OpenToolKit/Pdf2Img';">
+            onclick="window.location= 'https://github.com/chuz-tnd-skachss/Pdf2Img';">
         </div>
       </div>
     </div>
@@ -69,7 +72,7 @@
         <div id="acrylic_container">
           <div id="log">
             <li style="list-style: none; font-family: Consolas,SFMono-Regular,Liberation Mono,Menlo,monospace">
-              [Conversion log]
+              [Журнал событий]
             </li>
           </div>
         </div>
@@ -276,7 +279,7 @@
 
     function clearLog() {
       log.textContent = '';
-      addLogEntry("[Conversion log]", '');
+      addLogEntry("[Журнал событий]", '');
     }
 
     function combLog(val) {
@@ -358,8 +361,8 @@
       if (file.type != 'application/pdf') {
         pdfName = null;
         pdfFileObject = null;
-        console.log(file.name + " - Unsupported file format, Select a PDF file!!");
-        selected_file_name.value = file.name + " - Unsupported file format!!";
+        console.log(file.name + " - Неизвестный формат файла, Выберите PDF файл!!");
+        selected_file_name.value = file.name + " - Неизвестный формат файла!!";
         resetPreview();
         return;
       }
@@ -382,7 +385,7 @@
       toggleStates(false);
       clearLog();
 
-      console.log("Loading selected file...");
+      console.log("Загрузка выбранного файла...");
 
       const reader = new FileReader();
 
@@ -393,7 +396,7 @@
       if (pdfFileObject) {
         reader.readAsDataURL(pdfFileObject);
       } else {
-        console.log("Error reading file... Choose file again...");
+        console.log("Ошибка чтения файла... Выберите файл заново...");
         toggleStates(true);
       }
     }
@@ -419,7 +422,7 @@
       readPDF(pdf_url)
         .then(() => downloadAll(),
           () => {
-            console.log("Error reading PDF... May be an encrypted one [-_^]");
+            console.log("Ошибка чтения PDF... Может быть он зашифрован [-_^]");
             toggleStates(true);
           });
     }
@@ -432,8 +435,8 @@
         loadingTask.promise.then(function (pdfDoc_) {
           pdfDoc = pdfDoc_;
           resetPDFMetaStore(pdfDoc.numPages);
-          console.log("PDF Loaded: " + pdfName);
-          selected_file_name.value += ' - ' + pageCount + ' Pages';
+          console.log("PDF-файл загружен: " + pdfName);
+          selected_file_name.value += ' - ' + pageCount + ' страниц';
           resolve(1);
         },
           () => reject(1));
@@ -473,7 +476,7 @@
 
           canvas.toBlob(function (blob) {
             imgData[num] = blob;
-            console.log("Completed page: " + num);
+            console.log("Обработано страниц: " + num);
             pageRendering = false;
 
             if (pageNumPending !== null && pageNumPending.length != 0) {
@@ -482,7 +485,7 @@
 
             } else {
               if (Object.keys(imgData).length == pageCount) {
-                console.log("Rendering complete");
+                console.log("Рендер завершён!");
                 processImageData();
               }
             }
@@ -490,7 +493,7 @@
         });
       });
 
-      console.log("Processing page: " + num);
+      console.log("Обработано страниц: " + num);
     }
 
     /**
@@ -512,7 +515,7 @@
     }
 
     function processImageData() {
-      console.log("Creating Zip...");
+      console.log("Создания ZIP-файла...");
       var zip = new JSZip();
       var pages = zip.folder(pdfName);
 
@@ -524,9 +527,9 @@
       }
 
       zip.generateAsync({ type: "blob" }).then(function (content) {
-        console.log("Downloading Zip...");
+        console.log("Загрузка ZIP-файла...");
         saveAs(content, pdfName + ".zip");
-        console.log(pdfName + ".zip" + "-Download Complete [-_-]");
+        console.log(pdfName + ".zip" + "- загрузка завершена [-_-]");
         toggleStates(true);
       });
     }
